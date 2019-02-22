@@ -5,6 +5,22 @@
  * Simple block, renders and saves the same content without any interactivity.
  */
 
+/**
+ * ---------------  NOTES --------------------
+ * I think what I want to do here is have a block where you can load it with a group of staff members,
+ * choose a single staff member, or select multiple staff members. Will need a UI to search for a
+ * single staff member, maybe combine that search for a group too? Will need to visually indicate
+ * a difference between a staff member and a group name in the result.
+ * 
+ * ALSO, will likely need to offer a way to remove staff members from the REST API since
+ * they haven't been included yet and some users may need to keep this information private. So do I
+ * just create an option to opt out, and then based on that value, either use the rest api OR have
+ * a custom ajax function that can be called to get the info needed to have a block.
+ * 
+ * Single Staff Member block:
+ * 		- UI to search and select a staff member
+ */
+
 //  Import CSS.
 import './style.scss';
 import './editor.scss';
