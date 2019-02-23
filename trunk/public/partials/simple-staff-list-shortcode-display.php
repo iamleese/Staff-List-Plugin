@@ -21,6 +21,7 @@
 
 	// Get Template and CSS.
 	$custom_html            = stripslashes_deep( get_option( '_staff_listing_custom_html' ) );
+	$custom_single_html	= stripslashes_deep( get_option( '_staff_single_custom_html'));
 	$custom_css             = stripslashes_deep( get_option( '_staff_listing_custom_css' ) );
 	$default_tags           = get_option( '_staff_listing_default_tags' );
 	$default_formatted_tags = get_option( '_staff_listing_default_formatted_tags' );
@@ -63,8 +64,13 @@
 	/**
 	 * Set up our loop_markup
 	 */
+	if(!empty($args['p'])){
+		$loop_markup_reset = $custom_single_html;
+		$singleclass = 'single';
+	}else{ 
+		$loop_markup_reset = str_replace( '[staff_loop]', '', substr( $custom_html, strpos( $custom_html, '[staff_loop]' ), strpos( $custom_html, '[/staff_loop]' ) - strpos( $custom_html, '[staff_loop]' ) ) );
+	}
 
-	$loop_markup_reset = str_replace( '[staff_loop]', '', substr( $custom_html, strpos( $custom_html, '[staff_loop]' ), strpos( $custom_html, '[/staff_loop]' ) - strpos( $custom_html, '[staff_loop]' ) ) );
 	$loop_markup       = $loop_markup_reset;
 
 
@@ -81,7 +87,7 @@
 
 	if ( $staff->have_posts() ) :
 
-		$output .= '<div class="staff-member-listing ' . $group . '">';
+		$output .= '<div class="staff-member-listing ' . $group . ' ' . $singleclass .'">';
 
 		while ( $staff->have_posts() ) :
 			$staff->the_post();
