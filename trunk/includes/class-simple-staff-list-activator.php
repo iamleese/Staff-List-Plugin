@@ -41,10 +41,25 @@ class Simple_Staff_List_Activator {
 				[staff-email-link]
 			</div>
 		[/staff_loop]';
+		
+		$default_single_template = '
+			<img class="staff-member-photo" src="[staff-photo-url]" alt="[staff-name] : [staff-position]">
+			<div class="staff-member-info-wrap">
+				[staff-name-formatted]
+				[staff-position-formatted]
+				[staff-email-link]
+				[staff-bio-formatted]
+			</div>
+		';
 
 		$default_css = '
 			/*  div wrapped around entire staff list  */
 			div.staff-member-listing {
+			}
+			/*  div wrapped around entire single staff member  */
+			div.staff-member-listing.single {
+				border: 1px solid #cccccc;
+				padding: 20px; 
 			}
 			/*  div wrapped around each staff member  */
 			div.staff-member {
@@ -132,6 +147,7 @@ class Simple_Staff_List_Activator {
 		update_option( '_staff_listing_default_formatted_tags', $default_formatted_tags );
 		update_option( '_staff_listing_default_formatted_tag_string', $default_formatted_tag_string );
 		update_option( '_staff_listing_default_html', $default_template );
+		update_option( '_staff_single_default_html', $default_single_template ); //add default single html
 		update_option( '_staff_listing_default_css', $default_css );
 		update_option( '_staff_listing_default_slug', $default_slug );
 		update_option( '_staff_listing_default_name_singular', $default_name_singular );
@@ -139,6 +155,11 @@ class Simple_Staff_List_Activator {
 
 		if ( ! get_option( '_staff_listing_custom_html' ) ) {
 			update_option( '_staff_listing_custom_html', $default_template );
+		}
+		
+		//Single template
+		if ( ! get_option( '_staff_single_custom_html' ) ) {
+			update_option( '_staff_single_custom_html', $default_single_template );
 		}
 
 		$filename = get_stylesheet_directory() . '/simple-staff-list-custom.css';
