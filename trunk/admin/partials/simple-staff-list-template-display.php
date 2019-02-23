@@ -13,6 +13,7 @@
 
 // Get options for default HTML CSS.
 	$default_html                 = get_option( '_staff_listing_default_html' );
+	$default_single_html	      = get_option( '_staff_single_default_html'); //add single html template
 	$default_css                  = get_option( '_staff_listing_default_css' );
 	$default_tag_string           = get_option( '_staff_listing_default_tag_string' );
 	$default_formatted_tag_string = get_option( '_staff_listing_default_formatted_tag_string' );
@@ -40,9 +41,11 @@ foreach ( $default_formatted_tags as $tag ) {
 	// Check Nonce and then update options.
 if ( ! empty( $_POST ) && check_admin_referer( 'staff-member-template', 'staff-list-template' ) ) {
 	update_option( '_staff_listing_custom_html', $_POST['staff-listing-html'] );
+	update_option( '_staff_single_custom_html', $_POST['staff-single-html'] );
 	update_option( '_staff_listing_custom_css', $_POST['staff-listing-css'] );
 
 	$custom_html = stripslashes_deep( get_option( '_staff_listing_custom_html' ) );
+	$custom_single_html = stripslashes_deep( get_option( '_staff_single_custom_html' ) );
 	$custom_css  = stripslashes_deep( get_option( '_staff_listing_custom_css' ) );
 
 	if ( ! isset( $_POST['write-external-css'] ) ) {
@@ -58,6 +61,7 @@ if ( ! empty( $_POST ) && check_admin_referer( 'staff-member-template', 'staff-l
 	}
 } else {
 	$custom_html = stripslashes_deep( get_option( '_staff_listing_custom_html' ) );
+	$custom_single_html = stripslashes_deep( get_option( '_staff_single_custom_html' ) );
 
 	if ( 'yes' === $write_external_css ) {
 
@@ -112,6 +116,19 @@ if ( 'yes' === $write_external_css ) {
 		    			</div><br />';
 
 			$output .= '<textarea name="staff-listing-html" cols="120" rows="16">' . $custom_html . '</textarea>';
+			
+			//single staff template
+			$output .= '<h3>'. __('Single Staff Member Template','simple-staff-list') .'</h3>';
+			$output .= '<br />';
+			$output .= '<div class="default-html">
+		    				<h4 class="heading button-secondary">' . __( 'View Default Single Template', 'simple-staff-list' ) . '</h4>
+		    				<div class="content">
+		    					<pre>' . htmlspecialchars( stripslashes_deep( $default_single_html ) ) . '</pre>
+		    				</div>
+		    			</div><br />';
+			$output .= '<textarea name="staff-single-html" cols="120" rows="16">' . $custom_single_html . '</textarea>';
+			//End single staff template
+
 			$output .= '<p><input type="submit" value="' . __( 'Save ALL Changes', 'simple-staff-list' ) . '" class="button button-primary button-large"></p><br /><br />';
 
 			$output .= '<h3>' . __( 'Staff Page CSS', 'simple-staff-list' ) . '</h3>';
